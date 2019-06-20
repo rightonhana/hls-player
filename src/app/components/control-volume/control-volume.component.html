@@ -1,0 +1,10 @@
+<div class="volume-control">
+  <app-control class="icon" [icon]="icon" [title]="title" (click)="onVolumeClick()"></app-control>
+  <app-progress-bar
+    class="bar"
+    [max]="maxVolumeValue"
+    [value]="volume"
+    (input)="onInput($event)"
+    tabindex="0"
+  ></app-progress-bar>
+</div>

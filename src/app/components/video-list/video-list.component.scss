@@ -1,0 +1,21 @@
+.video-list {
+  width: auto;
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .title {
+    margin: 0 1em 0 0;
+  }
+
+  .list, .list-item {
+    width: 100%;
+  }
+
+  .list-item.active {
+    background-color: #ff98bb;
+  }
+}

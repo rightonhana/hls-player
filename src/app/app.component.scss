@@ -1,0 +1,29 @@
+.video-app {
+  margin: 3em;
+  display: flex;
+
+  .video-player {
+    width: 60vw;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .list {
+    margin-left: 1.5em;
+    flex: 1;
+  }
+
+  @media (max-width: 800px) {
+    flex-direction: column;
+
+    .video-player {
+      width: 100%;
+    }
+
+    .list {
+      margin: 2em 0 0 0;
+    }
+  }
+}

@@ -1,0 +1,9 @@
+<mat-slider
+  class="slider"
+  min="0"
+  [max]="max"
+  [value]="value"
+  (input)="inputHandler($event)"
+  (change)="changeHandler($event)"
+  step="0.00001"
+></mat-slider>

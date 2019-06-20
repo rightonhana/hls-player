@@ -1,0 +1,16 @@
+.video-controls {
+  width: 100%;
+
+  .controls {
+    height: 1.5em;
+    align-items: center;
+    display: flex;
+    justify-content: flex-start;
+
+    .full-screen {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+}

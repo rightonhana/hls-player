@@ -1,0 +1,23 @@
+<div class="video-list">
+  <div class="header">
+    <h2 class="title">Next</h2>
+    <p>
+      <span>
+        Play next
+      </span>
+      <mat-slide-toggle (change)="onChange()" [checked]="playNext"></mat-slide-toggle
+    ></p>
+  </div>
+  <mat-nav-list class="list">
+    <a
+      mat-list-item
+      class="list-item"
+      *ngFor="let video of videoList; let i = index"
+      [ngClass]="{ active: video.selected }"
+      (click)="playIt(i)"
+    >
+      <i class="material-icons">play_arrow</i>
+      {{ video.name }}
+    </a>
+  </mat-nav-list>
+</div>

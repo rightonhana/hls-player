@@ -1,0 +1,18 @@
+<div class="video-controls">
+  <app-progress-bar
+    class="bar"
+    [max]="duration"
+    [value]="currentProgress"
+    (input)="onInput($event)"
+    (change)="onChange($event)"
+  ></app-progress-bar>
+  <div class="controls">
+    <app-control [icon]="iconPlaying.value" [title]="iconPlaying.name" (click)="onPlayClick()"></app-control>
+    <app-control icon="skip_next" title="Next" (click)="onNextClick()"></app-control>
+    <app-control-volume></app-control-volume>
+    <app-time [currentProgress]="currentProgress" [duration]="duration"></app-time>
+    <div class="full-screen">
+      <app-control icon="fullscreen" title="Fullscreen" (click)="onFullscreen()"></app-control>
+    </div>
+  </div>
+</div>
