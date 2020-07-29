@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { VideoService } from 'src/app/services/video.service';
-import { MatSliderChange } from '@angular/material';
+import { MatSliderChange } from '@angular/material/slider';
 import { VolumeService } from 'src/app/services/volume.service';
 
 @Component({
@@ -19,6 +18,7 @@ export class ControlVolumeComponent implements OnInit {
     name: 'Mute',
     value: 'volume_off'
   };
+  public label = "Video progress";
   private savedVolume = 1;
 
   constructor(private volumeService: VolumeService) {}
@@ -42,5 +42,9 @@ export class ControlVolumeComponent implements OnInit {
 
   public get title() {
     return this.volume === 0 ? this.iconVolumeMute.name : this.iconVolumeUp.name;
+  }
+
+  public get ariaLabel() {
+    return this.label;
   }
 }

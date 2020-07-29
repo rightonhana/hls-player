@@ -1,4 +1,4 @@
 <div class="video-wrapper">
-  <video #video class="video"></video>
+  <video #video class="video" (click)="onVideoClick()" (dblclick)="onDoubleClick()"></video>
   <mat-spinner *ngIf="loading" class="spinner" color="accent" strokeWidth="5"></mat-spinner>
 </div>

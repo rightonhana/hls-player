@@ -1,6 +1,11 @@
 .video-app {
   margin: 3em;
   display: flex;
+  width: 95vw;
+  height: 95vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
 
   .video-player {
     width: 60vw;
@@ -19,11 +24,12 @@
     flex-direction: column;
 
     .video-player {
-      width: 100%;
+      width: 90%;
     }
 
     .list {
       margin: 2em 0 0 0;
+      width: 90%;
     }
   }
 }
