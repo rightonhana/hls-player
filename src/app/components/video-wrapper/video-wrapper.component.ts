@@ -13,6 +13,7 @@ import { VideoPlaylistService } from 'src/app/services/video-playlist.service';
 export class VideoWrapperComponent implements OnInit {
   public loading: boolean;
   public ignore: boolean;
+  public playing = false;
   private hls = new HLS();
   private videoListeners = {
     loadedmetadata: () => this.videoTimeService.setVideoDuration(this.video.nativeElement.duration),
@@ -50,6 +51,27 @@ export class VideoWrapperComponent implements OnInit {
     );
   }
 
+  /** Play/Pause video on click */
+  public onVideoClick() {
+      if (this.playing) {
+        this.videoService.pause();
+      } else {
+        this.videoService.play();
+      }
+  }
+
+  /** Go full screen on double click */
+  public onDoubleClick() {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    } else {
+      const videoPlayerDiv = document.querySelector('.video-player');
+      if (videoPlayerDiv.requestFullscreen) {
+        videoPlayerDiv.requestFullscreen();
+      }
+    }
+  }
+
   /**
    * Loads the video, if the browser supports HLS then the video use it, else play a video with native support
    */
@@ -64,10 +86,18 @@ export class VideoWrapperComponent implements OnInit {
   }
 
   /**
+   * Play or Pause current video
+   */
+  private playPauseVideo(playing: boolean) {
+    this.playing = playing;
+    this.video.nativeElement[playing ? 'play' : 'pause']();
+  }
+
+  /**
    * Setup subscriptions
    */
   private subscriptions() {
-    this.videoService.playingState$.subscribe(playing => this.video.nativeElement[playing ? 'play' : 'pause']());
+    this.videoService.playingState$.subscribe(playing => this.playPauseVideo(playing));
     this.videoPlaylistService.currentVideo$.subscribe(video => this.load(video));
     this.videoTimeService.currentTime$.subscribe(currentTime => (this.video.nativeElement.currentTime = currentTime));
     this.volumeService.volumeValue$.subscribe(volume => (this.video.nativeElement.volume = volume));

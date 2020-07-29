@@ -1,5 +1,11 @@
 .button {
   border: none;
   background-color: transparent;
+  min-width: 3rem;
+  min-height: 3rem;
   cursor: pointer;
+
+  i {
+    font-size: 2rem;
+  }
 }

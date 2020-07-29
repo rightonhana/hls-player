@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { MatSliderChange } from '@angular/material';
+import { MatSliderChange } from '@angular/material/slider';
 
 @Component({
   selector: 'app-progress-bar',
@@ -9,6 +9,7 @@ import { MatSliderChange } from '@angular/material';
 export class ProgressBarComponent {
   @Input() public readonly max: number;
   @Input() public readonly value: number;
+  @Input() public readonly label: string;
   @Output() public readonly input = new EventEmitter<MatSliderChange>();
   @Output() public readonly change = new EventEmitter<MatSliderChange>();
 

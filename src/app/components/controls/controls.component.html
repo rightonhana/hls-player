@@ -3,6 +3,7 @@
     class="bar"
     [max]="duration"
     [value]="currentProgress"
+    [label]="ariaLabel()"
     (input)="onInput($event)"
     (change)="onChange($event)"
   ></app-progress-bar>

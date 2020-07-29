@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { VideoService } from 'src/app/services/video.service';
-import { MatSliderChange } from '@angular/material';
+import { MatSliderChange } from '@angular/material/slider';
 import { VideoTimeService } from 'src/app/services/video-time.service';
 import { VideoPlaylistService } from 'src/app/services/video-playlist.service';
 
@@ -14,6 +14,7 @@ export class ControlsComponent implements OnInit {
   public currentProgress = 0;
   public duration = 0;
   public currentTime = 0;
+  public label = "Audio volume";
   private videoEnded = false;
 
   constructor(
@@ -86,5 +87,9 @@ export class ControlsComponent implements OnInit {
           name: 'Play',
           value: 'play_arrow'
         };
+  }
+
+  public ariaLabel() {
+    return this.label;
   }
 }

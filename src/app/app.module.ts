@@ -10,12 +10,10 @@ import { ProgressBarComponent } from './components/progress-bar/progress-bar.com
 import { ControlVolumeComponent } from './components/control-volume/control-volume.component';
 import { TimeComponent } from './components/time/time.component';
 import { VideoListComponent } from './components/video-list/video-list.component';
-import {
-  MatSlideToggleModule,
-  MatProgressSpinnerModule,
-  MatSliderModule,
-  MatListModule
-} from '@angular/material';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
