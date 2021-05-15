@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ControlVolumeComponent } from './control-volume.component';
 
@@ -6,7 +6,7 @@ describe('ControlVolumeComponent', () => {
   let component: ControlVolumeComponent;
   let fixture: ComponentFixture<ControlVolumeComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ControlVolumeComponent ]
     })
