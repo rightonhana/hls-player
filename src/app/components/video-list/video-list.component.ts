@@ -28,7 +28,7 @@ export class VideoListComponent implements OnInit {
         selected: item.url === currentVideo
       }));
     });
-    this.videoPlaylistService.fetchList('/assets/playlist.json');
+    this.videoPlaylistService.fetchList('./assets/playlist.json');
     this.videoPlaylistService
       .shouldPlayNext$
       .subscribe(playNext => (this.playNext = playNext));
