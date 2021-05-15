@@ -6,9 +6,5 @@
   {
     "title": "Sintel",
     "url": "https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8"
-  },
-  {
-    "title": "Table Ronde",
-    "url": "https://mnmedias.api.telequebec.tv/m3u8/29880.m3u8"
   }
 ]
