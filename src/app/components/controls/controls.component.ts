@@ -1,95 +1,95 @@
 import { Component, OnInit } from '@angular/core';
-import { VideoService } from 'src/app/services/video.service';
+import { VideoPlaylistService } from 'src/app/services/video-playlist/video-playlist.service';
+import { VideoTimeService } from 'src/app/services/video-time/video-time.service';
+import { VideoService } from 'src/app/services/video/video.service';
 import { MatSliderChange } from '@angular/material/slider';
-import { VideoTimeService } from 'src/app/services/video-time.service';
-import { VideoPlaylistService } from 'src/app/services/video-playlist.service';
 
 @Component({
-  selector: 'app-controls',
-  templateUrl: './controls.component.html',
-  styleUrls: ['./controls.component.scss']
+	selector: 'app-controls',
+	templateUrl: './controls.component.html',
+	styleUrls: ['./controls.component.scss'],
 })
 export class ControlsComponent implements OnInit {
-  public playing = false;
-  public currentProgress = 0;
-  public duration = 0;
-  public currentTime = 0;
-  public label = "Audio volume";
-  private videoEnded = false;
+	playing = false;
+	currentProgress = 0;
+	duration = 0;
+	currentTime = 0;
+	label = 'Audio volume';
+	private videoEnded = false;
 
-  constructor(
-    private videoService: VideoService,
-    private videoTimeService: VideoTimeService,
-    private videoPlaylistService: VideoPlaylistService
-  ) {}
+	constructor(
+		private videoService: VideoService,
+		private videoTimeService: VideoTimeService,
+		private videoPlaylistService: VideoPlaylistService
+	) {}
 
-  public ngOnInit() {
-    this.videoService
-      .playingState$
-      .subscribe(playing => (this.playing = playing));
-    this.videoTimeService.videoDuration$.subscribe(
-      duration => (this.duration = duration)
-    );
-    this.videoTimeService.videoProgress$.subscribe(
-      progress => (this.currentProgress = progress)
-    );
-    this.videoService
-      .videoEnded$
-      .subscribe(ended => (this.videoEnded = ended));
-  }
+	ngOnInit() {
+		this.videoService.playingState$.subscribe(
+			(playing) => (this.playing = playing)
+		);
+		this.videoTimeService.videoDuration$.subscribe(
+			(duration) => (this.duration = duration)
+		);
+		this.videoTimeService.videoProgress$.subscribe(
+			(progress) => (this.currentProgress = progress)
+		);
+		this.videoService.videoEnded$.subscribe(
+			(ended) => (this.videoEnded = ended)
+		);
+	}
 
-  public onPlayClick() {
-    if (this.playing) {
-      this.videoService.pause();
-    } else {
-      this.videoService.play();
-    }
-  }
+	onPlayClick() {
+		if (this.playing) {
+			this.videoService.pause();
+		} else {
+			this.videoService.play();
+		}
+	}
 
-  public onNextClick() {
-    this.videoPlaylistService.playNextVideo();
-    this.videoService.play();
-  }
+	onNextClick() {
+		this.videoPlaylistService.playNextVideo();
+		this.videoService.play();
+	}
 
-  public onInput(event: MatSliderChange): void {
-    this.videoTimeService.setIgnore(true);
-    this.videoTimeService.setVideoProgress(event.value);
-  }
+	onInput(event: MatSliderChange): void {
+		this.videoTimeService.setIgnore(true);
+		this.videoTimeService.setVideoProgress(event?.value ?? 0);
+	}
 
-  public onChange(event: MatSliderChange) {
-    this.videoTimeService.setIgnore(false);
-    this.videoTimeService.setCurrentTime(event.value);
-  }
+	onChange(event: MatSliderChange) {
+		this.videoTimeService.setIgnore(false);
+		this.videoTimeService.setCurrentTime(event?.value ?? 0);
+	}
 
-  public onFullscreen() {
-    if (document.fullscreenElement) {
-      document.exitFullscreen();
-    } else {
-      const videoPlayerDiv = document.querySelector('.video-player');
-      if (videoPlayerDiv.requestFullscreen) {
-        videoPlayerDiv.requestFullscreen();
-      }
-    }
-  }
+	onFullscreen() {
+		if (document.fullscreenElement) {
+			document.exitFullscreen();
+		} else {
+			const videoPlayerDiv = document.querySelector('.video-player');
+			if (videoPlayerDiv?.requestFullscreen) {
+				videoPlayerDiv.requestFullscreen();
+			}
+		}
+	}
 
-  public get iconPlaying() {
-    return this.videoEnded
-      ? {
-          name: 'Replay',
-          value: 'replay'
-        }
-      : this.playing
-      ? {
-          name: 'Pause',
-          value: 'pause'
-        }
-      : {
-          name: 'Play',
-          value: 'play_arrow'
-        };
-  }
+	get iconPlaying() {
+		return this.videoEnded
+			? {
+					name: 'Replay',
+					value: 'replay',
+				}
+			: this.playing
+			? {
+					name: 'Pause',
+					value: 'pause',
+				}
+			: {
+					name: 'Play',
+					value: 'play_arrow',
+				};
+	}
 
-  public ariaLabel() {
-    return this.label;
-  }
+	ariaLabel() {
+		return this.label;
+	}
 }

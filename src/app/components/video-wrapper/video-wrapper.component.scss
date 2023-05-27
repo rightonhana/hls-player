@@ -1,15 +1,22 @@
 .video-wrapper {
-  position: relative;
+	background-color: #292929;
+	position: relative;
 
-  .video {
-    width: 100%;
-    max-height: 80vh;
-    margin: 0 auto;
-  }
+	.video {
+		margin: 0 auto;
+		width: 100%;
+	}
 
-  .spinner {
-    position: absolute;
-    top: calc(50% - 50px);
-    left: calc(50% - 50px);
-  }
+	.control {
+		i {
+			font-size: 4rem !important;
+		}
+	}
+
+	.spinner,
+	.control {
+		left: calc(50% - 30px);
+		position: absolute;
+		top: calc(50% - 30px);
+	}
 }

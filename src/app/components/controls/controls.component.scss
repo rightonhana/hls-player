@@ -1,16 +1,18 @@
 .video-controls {
-  width: 100%;
+	background-color: #292929;
+	color: #fff;
+	width: 100%;
 
-  .controls {
-    height: 1.5em;
-    align-items: center;
-    display: flex;
-    justify-content: flex-start;
+	.controls {
+		height: 1.5em;
+		align-items: center;
+		display: flex;
+		justify-content: flex-start;
 
-    .full-screen {
-      width: 100%;
-      display: flex;
-      justify-content: flex-end;
-    }
-  }
+		.full-screen {
+			width: 100%;
+			display: flex;
+			justify-content: flex-end;
+		}
+	}
 }

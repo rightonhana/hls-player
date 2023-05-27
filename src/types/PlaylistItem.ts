@@ -1,4 +1,4 @@
-export interface PlaylistItem {
+export type PlaylistItem = {
   /**
    * Item title.
    */
@@ -8,6 +8,4 @@ export interface PlaylistItem {
    * Item url.
    */
   url: string;
-}
-
-export default PlaylistItem;
+};

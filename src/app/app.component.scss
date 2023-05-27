@@ -8,42 +8,42 @@
 	margin: 2em 2em 0 2em;
 
 	h1 {
-		margin: 0;
+		margin-bottom: 2rem;
 	}
 
 	.video-app {
-	  margin-top: 1em;
-	  display: flex;
-	  display: flex;
-	  width: 95vw;
-	  height: 95vh;
-	  justify-content: center;
-	  align-items: flex-start;
-	
-	  .video-player {
-		width: 60vw;
-		background-color: #fff;
+		margin-top: 1em;
 		display: flex;
-		flex-direction: column;
+		display: flex;
+		width: 95vw;
+		height: 95vh;
 		justify-content: center;
-	  }
-	
-	  .list {
-		margin-left: 1.5em;
-		flex: 1;
-	  }
-	
-	  @media (max-width: 800px) {
-		flex-direction: column;
+		align-items: flex-start;
 	
 		.video-player {
-		  width: 90%;
+			width: 60vw;
+			background-color: #292929;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
 		}
 	
 		.list {
-		  margin: 2em 0 0 0;
-		  width: 90%;
+			margin-left: 1.5em;
+			flex: 1;
 		}
-	  }
+	
+		@media (max-width: 800px) {
+			flex-direction: column;
+		
+			.video-player {
+				width: 90%;
+			}
+		
+			.list {
+				margin: 2em 0 0 0;
+				width: 90%;
+			}
+		}
 	}
 }

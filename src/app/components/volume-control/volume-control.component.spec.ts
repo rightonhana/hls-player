@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VideoListComponent } from './video-list.component';
+import { VolumeControlComponent } from './volume-control.component';
 
-describe('VideoListComponent', () => {
-	let component: VideoListComponent;
-	let fixture: ComponentFixture<VideoListComponent>;
+describe('VolumeControlComponent', () => {
+	let component: VolumeControlComponent;
+	let fixture: ComponentFixture<VolumeControlComponent>;
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [ VideoListComponent ]
+			declarations: [ VolumeControlComponent ]
 		})
 		.compileComponents();
 	});
 
 	beforeEach(() => {
-		fixture = TestBed.createComponent(VideoListComponent);
+		fixture = TestBed.createComponent(VolumeControlComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	});
