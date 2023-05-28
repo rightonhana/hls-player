@@ -25,7 +25,7 @@ jobs:
               run: npm run build
 
             - name: Copy required files to docs
-              run: mkdir ./docs && cp ./dist ./docs
+              run: mkdir ./docs && cp -r ./dist ./docs
 
             - name: Upload Pages Artifact
               uses: actions/upload-pages-artifact@v1
