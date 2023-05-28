@@ -24,7 +24,7 @@ jobs:
             - name: Build
               run: npm run build
 
-            - name: Copy required files to docs
+            - name: Copy dist to docs
               run: mkdir ./docs && cp -r ./dist ./docs
 
             - name: Upload Pages Artifact
