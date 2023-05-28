@@ -18,11 +18,8 @@ jobs:
               with:
                   node-version: 18
 
-            - name: Use npm 9
-              uses: npm/action-setup@v2
-              with:
-                  version: 9
-                  run_install: true
+            - name: Install dependencies
+              run: npm ci
 
             - name: Upload Pages Artifact
               uses: actions/upload-pages-artifact@v1
