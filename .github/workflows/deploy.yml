@@ -24,13 +24,10 @@ jobs:
             - name: Build
               run: npm run build
 
-            - name: Copy dist to docs
-              run: mkdir ./docs && cp -r ./dist ./docs
-
             - name: Upload Pages Artifact
               uses: actions/upload-pages-artifact@v1
               with:
-                  path: ./docs
+                  path: ./dist/video-player
                   name: github-pages
                   retention-days: 1
     deploy:
