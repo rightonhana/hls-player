@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "baseHref": "/video-player/",
+            "baseHref": "/hls-player/",
             "outputPath": "dist/video-player",
             "index": "src/index.html",
             "main": "src/main.ts",
