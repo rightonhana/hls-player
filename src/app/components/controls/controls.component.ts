@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { VideoPlaylistService } from 'src/app/services/video-playlist/video-playlist.service';
 import { VideoTimeService } from 'src/app/services/video-time/video-time.service';
 import { VideoService } from 'src/app/services/video/video.service';
-import { MatSliderChange } from '@angular/material/slider';
+import { MatLegacySliderChange as MatSliderChange } from '@angular/material/legacy-slider';
 
 @Component({
 	selector: 'app-controls',

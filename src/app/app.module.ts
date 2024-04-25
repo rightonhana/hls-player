@@ -10,10 +10,10 @@ import { TimeComponent } from './components/time/time.component';
 import { VideoListComponent } from './components/video-list/video-list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VideoWrapperComponent } from './components/video-wrapper/video-wrapper.component';
-import { MatSliderModule } from '@angular/material/slider';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatListModule } from '@angular/material/list';
+import { MatLegacySliderModule as MatSliderModule } from '@angular/material/legacy-slider';
+import { MatLegacySlideToggleModule as MatSlideToggleModule } from '@angular/material/legacy-slide-toggle';
+import { MatLegacyProgressSpinnerModule as MatProgressSpinnerModule } from '@angular/material/legacy-progress-spinner';
+import { MatLegacyListModule as MatListModule } from '@angular/material/legacy-list';
 
 @NgModule({
 	declarations: [

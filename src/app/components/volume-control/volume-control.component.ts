@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { VolumeService } from 'src/app/services/volume/volume.service';
-import { MatSliderChange } from '@angular/material/slider';
+import { MatLegacySliderChange as MatSliderChange } from '@angular/material/legacy-slider';
 
 @Component({
 	selector: 'app-volume-control',
