@@ -1,27 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-import { VideoPlaylistService } from 'src/app/services/video-playlist/video-playlist.service';
-import { VideoTimeService } from 'src/app/services/video-time/video-time.service';
-import { VideoService } from 'src/app/services/video/video.service';
-import { MatLegacySliderChange as MatSliderChange } from '@angular/material/legacy-slider';
+import { Component } from '@angular/core';
+import { VideoService } from '../../services/video/video.service';
+import { VideoTimeService } from '../../services/video-time/video-time.service';
+import { VideoPlaylistService } from '../../services/video-playlist/video-playlist.service';
+import { ControlComponent } from '../control/control.component';
+import { VolumeControlComponent } from '../volume-control/volume-control.component';
+import { TimeComponent } from '../time/time.component';
+import { ProgressBarComponent } from '../progress-bar/progress-bar.component';
 
 @Component({
 	selector: 'app-controls',
+	imports: [ControlComponent, VolumeControlComponent, TimeComponent, ProgressBarComponent],
 	templateUrl: './controls.component.html',
-	styleUrls: ['./controls.component.scss'],
 })
-export class ControlsComponent implements OnInit {
-	playing = false;
+export class ControlsComponent {
 	currentProgress = 0;
-	duration = 0;
 	currentTime = 0;
+	duration = 0;
 	label = 'Audio volume';
+	playing = false;
 	private videoEnded = false;
 
 	constructor(
 		private videoService: VideoService,
 		private videoTimeService: VideoTimeService,
 		private videoPlaylistService: VideoPlaylistService
-	) {}
+	) { }
 
 	ngOnInit() {
 		this.videoService.playingState$.subscribe(
@@ -51,14 +54,14 @@ export class ControlsComponent implements OnInit {
 		this.videoService.play();
 	}
 
-	onInput(event: MatSliderChange): void {
+	onInput(event: Event): void {
 		this.videoTimeService.setIgnore(true);
-		this.videoTimeService.setVideoProgress(event?.value ?? 0);
+		this.videoTimeService.setVideoProgress((event?.target as HTMLInputElement)?.valueAsNumber ?? 0);
 	}
 
-	onChange(event: MatSliderChange) {
+	onChange(event: Event) {
 		this.videoTimeService.setIgnore(false);
-		this.videoTimeService.setCurrentTime(event?.value ?? 0);
+		this.videoTimeService.setCurrentTime((event?.target as HTMLInputElement)?.valueAsNumber ?? 0);
 	}
 
 	onFullscreen() {
@@ -75,15 +78,15 @@ export class ControlsComponent implements OnInit {
 	get iconPlaying() {
 		return this.videoEnded
 			? {
-					name: 'Replay',
-					value: 'replay',
-				}
+				name: 'Replay',
+				value: 'replay',
+			}
 			: this.playing
-			? {
+				? {
 					name: 'Pause',
 					value: 'pause',
 				}
-			: {
+				: {
 					name: 'Play',
 					value: 'play_arrow',
 				};

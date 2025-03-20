@@ -1,34 +1,35 @@
-<div class="video-controls">
-	<app-progress-bar
-		class="bar"
-		[max]="duration"
-		[value]="currentProgress"
-		[label]="ariaLabel()"
-		(input)="onInput($event)"
-		(change)="onChange($event)"
-	></app-progress-bar>
-	<div class="controls">
-		<app-control
-			[icon]="iconPlaying.value"
-			[title]="iconPlaying.name"
-			(click)="onPlayClick()"
-		></app-control>
-		<app-control
-			icon="skip_next"
-			title="Next"
-			(click)="onNextClick()"
-		></app-control>
-		<app-volume-control></app-volume-control>
-		<app-time
-			[currentProgress]="currentProgress"
-			[duration]="duration"
-		></app-time>
-		<div class="full-screen">
-			<app-control
-				icon="fullscreen"
-				title="Fullscreen"
-				(click)="onFullscreen()"
-			></app-control>
-		</div>
-	</div>
+
+<div style="background-color:#101828;" class="text-white w-full border-white dark:border-gray-700 border rounded-b-lg border-2 bg-grey-900 border-t-0 px-2">
+  <app-progress-bar
+    class="bar"
+    [max]="duration"
+    [value]="currentProgress"
+    [label]="ariaLabel()"
+    (input)="onInput($event)"
+    (change)="onChange($event)"
+  ></app-progress-bar>
+  <div class="items-center flex justify-start">
+    <app-control
+      [icon]="iconPlaying.value"
+      [title]="iconPlaying.name"
+      (click)="onPlayClick()"
+    ></app-control>
+    <app-control
+      icon="skip_next"
+      title="Next"
+      (click)="onNextClick()"
+    ></app-control>
+    <app-volume-control></app-volume-control>
+    <app-time
+      [currentProgress]="currentProgress"
+      [duration]="duration"
+    ></app-time>
+    <div class="w-full flex justify-end">
+      <app-control
+        icon="fullscreen"
+        title="Fullscreen"
+        (click)="onFullscreen()"
+      ></app-control>
+    </div>
+  </div>
 </div>
