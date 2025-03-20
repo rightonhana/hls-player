@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
-	providedIn: 'root',
+  providedIn: 'root',
 })
 export class VideoTimeService {
 	private videoProgress = new BehaviorSubject<number>(0);
