@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
+import { PlaylistItem } from '../../../types/PlaylistItem';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { PlaylistItem } from 'src/types/PlaylistItem';
 import { VideoService } from '../video/video.service';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class VideoPlaylistService {
-	private list = new BehaviorSubject<PlaylistItem[]>([]);
-	private currentVideo = new BehaviorSubject<string>('');
-	private shouldPlayNext = new BehaviorSubject<boolean>(true);
+	private list = new BehaviorSubject<ReadonlyArray<PlaylistItem>>([]);
+	private currentVideoURL = new BehaviorSubject<string>('');
+	private shouldPlayNext = new BehaviorSubject<boolean>(false);
 
-	constructor(private videoService: VideoService) {}
+	constructor(private videoService: VideoService) { }
 
 	setShouldPlayNext(playNext: boolean): void {
 		this.shouldPlayNext.next(playNext);
@@ -21,17 +21,17 @@ export class VideoPlaylistService {
 		return this.shouldPlayNext.asObservable();
 	}
 
-	get list$(): Observable<PlaylistItem[]> {
+	get list$(): Observable<ReadonlyArray<PlaylistItem>> {
 		return this.list.asObservable();
 	}
 
-	get currentVideo$(): Observable<string> {
-		return this.currentVideo.asObservable();
+	get currentVideoURL$(): Observable<string> {
+		return this.currentVideoURL.asObservable();
 	}
 
 	setCurrentVideo(video: string): void {
-		if (this.currentVideo.getValue() !== video) {
-			this.currentVideo.next(video);
+		if (this.currentVideoURL.getValue() !== video) {
+			this.currentVideoURL.next(video);
 			this.videoService.pause();
 		}
 	}
@@ -39,7 +39,7 @@ export class VideoPlaylistService {
 	playNextVideo(): void {
 		const activeIndex = this.list
 			.getValue()
-			.findIndex((video) => this.currentVideo.getValue() === video.url);
+			.findIndex((video) => this.currentVideoURL.getValue() === video.url);
 		this.setCurrentVideoByIndex(activeIndex + 1);
 	}
 
@@ -50,7 +50,7 @@ export class VideoPlaylistService {
 	fetchList(endpoint: string): void {
 		fetch(endpoint)
 			.then((response) => response.json())
-			.then((playlist: PlaylistItem[]) => {
+			.then((playlist: ReadonlyArray<PlaylistItem>) => {
 				this.list.next(playlist);
 				this.setCurrentVideo(playlist[0].url);
 			});
