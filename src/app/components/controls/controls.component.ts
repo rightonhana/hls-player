@@ -17,7 +17,6 @@ export class ControlsComponent {
 	currentTime = 0;
 	duration = 0;
 	label = 'Audio volume';
-	playing = false;
 	private videoEnded = false;
 
 	constructor(
@@ -27,9 +26,6 @@ export class ControlsComponent {
 	) { }
 
 	ngOnInit() {
-		this.videoService.playingState$.subscribe(
-			(playing) => (this.playing = playing)
-		);
 		this.videoTimeService.videoDuration$.subscribe(
 			(duration) => (this.duration = duration)
 		);
@@ -42,11 +38,7 @@ export class ControlsComponent {
 	}
 
 	onPlayClick() {
-		if (this.playing) {
-			this.videoService.pause();
-		} else {
-			this.videoService.play();
-		}
+		this.videoService.toggle();
 	}
 
 	onNextClick() {
@@ -65,14 +57,9 @@ export class ControlsComponent {
 	}
 
 	onFullscreen() {
-		if (document.fullscreenElement) {
-			document.exitFullscreen();
-		} else {
-			const videoPlayerDiv = document.querySelector('.video-player');
-			if (videoPlayerDiv?.requestFullscreen) {
-				videoPlayerDiv.requestFullscreen();
-			}
-		}
+		document.fullscreenElement
+			? document.exitFullscreen()
+			: document.querySelector('.video')?.requestFullscreen();
 	}
 
 	get iconPlaying() {
@@ -81,7 +68,7 @@ export class ControlsComponent {
 				name: 'Replay',
 				value: 'replay',
 			}
-			: this.playing
+			: this.videoService.playing
 				? {
 					name: 'Pause',
 					value: 'pause',
