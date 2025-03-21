@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 	providedIn: 'root',
 })
 export class VolumeService {
-	private volume = new BehaviorSubject<number>(1);
+	private volume = new BehaviorSubject<number>(100);
 
 	setVolumeValue(value: number): void {
 		this.volume.next(value);
