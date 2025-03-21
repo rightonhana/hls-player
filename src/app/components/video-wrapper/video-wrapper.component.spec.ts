@@ -8,12 +8,10 @@ describe('VideoWrapperComponent', () => {
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [ VideoWrapperComponent ]
+			imports: [VideoWrapperComponent]
 		})
-		.compileComponents();
-	});
+			.compileComponents();
 
-	beforeEach(() => {
 		fixture = TestBed.createComponent(VideoWrapperComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();

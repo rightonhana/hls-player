@@ -1,21 +1,17 @@
-<div class="video-wrapper">
-	<video
-		#video
-		class="video"
-		(click)="onVideoClick()"
-		(dblclick)="onDoubleClick()"
-	></video>
-	<app-control
-		class="control"
-		*ngIf="!playing"
-		[icon]="videoIconPlaying.value"
-		[title]="videoIconPlaying.name"
-		(click)="onVideoClick()"
-	></app-control>
-	<mat-spinner
-		*ngIf="loading"
-		class="spinner"
-		color="accent"
-		strokeWidth="5"
-	></mat-spinner>
+<div class="relative h-[calc(100%_-_60px)]">
+  <video
+    #video
+    class="video-player aspect-video size-full max-w-full bg-black"
+    (click)="onVideoClick()"
+    (dblclick)="onDoubleClick()"
+    playsInline
+  ></video>
+  <app-control
+    class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+    *ngIf="!playing && !loading"
+    [icon]="videoIconPlaying.value"
+    [title]="videoIconPlaying.name"
+    (click)="onVideoClick()"
+  ></app-control>
+  <app-spinner [loading]="loading"></app-spinner>
 </div>

@@ -1,23 +1,26 @@
-import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { VideoService } from '../../services/video/video.service';
+import { VolumeService } from '../../services/volume/volume.service';
+import { VideoTimeService } from '../../services/video-time/video-time.service';
+import { VideoPlaylistService } from '../../services/video-playlist/video-playlist.service';
 import Hls from 'hls.js';
-import { VideoPlaylistService } from 'src/app/services/video-playlist/video-playlist.service';
-import { VideoTimeService } from 'src/app/services/video-time/video-time.service';
-import { VideoService } from 'src/app/services/video/video.service';
-import { VolumeService } from 'src/app/services/volume/volume.service';
+import { ControlComponent } from '../control/control.component';
+import { CommonModule } from '@angular/common';
+import { SpinnerComponent } from '../spinner/spinner.component';
+import { distinctUntilChanged } from 'rxjs';
 
 @Component({
 	selector: 'app-video-wrapper',
+	imports: [ControlComponent, SpinnerComponent, CommonModule],
 	templateUrl: './video-wrapper.component.html',
-	styleUrls: ['./video-wrapper.component.scss'],
-	encapsulation: ViewEncapsulation.None,
 })
-export class VideoWrapperComponent implements OnInit {
-	loading = true;
+export class VideoWrapperComponent {
 	ignore = false;
+	loading = true;
 	playing = false;
 	playNext = true;
-	private videoEnded = false;
 	private hls = new Hls();
+	private videoEnded = false;
 	private videoListeners = {
 		loadedmetadata: () =>
 			this.videoTimeService.setVideoDuration(this.video.nativeElement.duration),
@@ -31,7 +34,7 @@ export class VideoWrapperComponent implements OnInit {
 			}
 			if (
 				this.video.nativeElement.currentTime ===
-					this.video.nativeElement.duration &&
+				this.video.nativeElement.duration &&
 				this.video.nativeElement.duration > 0
 			) {
 				this.videoService.pause();
@@ -40,7 +43,7 @@ export class VideoWrapperComponent implements OnInit {
 				this.videoService.setVideoEnded(false);
 			}
 		},
-	};
+	} as const satisfies Partial<Record<keyof HTMLVideoElementEventMap, () => void>>;
 
 	@ViewChild('video', { static: true }) video: ElementRef<HTMLVideoElement> = {} as ElementRef<HTMLVideoElement>;
 
@@ -49,43 +52,40 @@ export class VideoWrapperComponent implements OnInit {
 		private volumeService: VolumeService,
 		private videoTimeService: VideoTimeService,
 		private videoPlaylistService: VideoPlaylistService
-	) {}
+	) { }
 
 	ngOnInit() {
 		this.subscriptions();
-		Object.keys(this.videoListeners).forEach((videoListener) => {
+		(Object.keys(this.videoListeners) as ReadonlyArray<keyof typeof this.videoListeners>).forEach((videoListener) => {
 			if (this.video) {
 				this.video.nativeElement.addEventListener(
 					videoListener,
-					this.videoListeners[videoListener as keyof typeof this.videoListeners]
+					this.videoListeners[videoListener]
 				)
 			}
 		});
 	}
 
+	private timeout: ReturnType<typeof setTimeout> | undefined
+
 	/** Play/Pause video on click */
 	onVideoClick() {
-		if (this.playing) {
-			this.videoService.pause();
-		} else {
-			this.videoService.play();
-		}
+		clearTimeout(this.timeout);
+		this.timeout = setTimeout(() => this.videoService.toggle(), 200);
 	}
 
 	/** Go full screen on double click */
 	onDoubleClick() {
-		if (document.fullscreenElement) {
-			document.exitFullscreen();
-		} else {
-			const videoPlayerDiv = document.querySelector('.video-player');
-			if (videoPlayerDiv?.requestFullscreen) {
-				videoPlayerDiv.requestFullscreen();
-			}
-		}
+		clearTimeout(this.timeout);
+		document.fullscreenElement
+			? document.exitFullscreen()
+			: document.querySelector('.video')?.requestFullscreen()
 	}
 
 	/**
-	 * Loads the video, if the browser supports HLS then the video use it, else play a video with native support
+	 * Loads the video, if the browser supports HLS then the video use it,
+	 * else play a video with native support.
+	 * @param currentVideo video URL
 	 */
 	load(currentVideo: string): void {
 		if (Hls.isSupported()) {
@@ -102,43 +102,33 @@ export class VideoWrapperComponent implements OnInit {
 	get videoIconPlaying() {
 		return this.videoEnded && !this.playNext
 			? {
-					name: 'Replay',
-					value: 'replay',
+				name: 'Replay',
+				value: 'replay',
+			}
+			: this.videoService.playing
+				? {
+					name: '',
+					value: '',
 				}
-			: this.playing
-			? {
-					name: 'Pause',
-					value: 'pause',
-				}
-			: {
+				: {
 					name: 'Play',
 					value: 'play_arrow',
 				};
 	}
 
 	/**
-	 * Play or Pause current video
-	 */
-	private playPauseVideo(playing: boolean) {
-		this.playing = playing;
-		this.video.nativeElement[playing ? 'play' : 'pause']();
-	}
-
-	/**
-	 * Setup subscriptions
+	 * Setup subscriptions.
 	 */
 	private subscriptions() {
-		this.videoService.playingState$.subscribe((playing) =>
-			this.playPauseVideo(playing)
-		);
-		this.videoPlaylistService.currentVideo$.subscribe((video) =>
+		this.videoService.setVideoElement(this.video.nativeElement)
+		this.videoPlaylistService.currentVideoURL$.subscribe((video) =>
 			this.load(video)
 		);
 		this.videoTimeService.currentTime$.subscribe(
 			(currentTime) => (this.video.nativeElement.currentTime = currentTime)
 		);
 		this.volumeService.volumeValue$.subscribe(
-			(volume) => (this.video.nativeElement.volume = volume)
+			(volume) => (this.video.nativeElement.volume = volume / 100)
 		);
 		this.videoService.videoEnded$.subscribe(
 			(ended) => (this.videoEnded = ended)
@@ -151,7 +141,8 @@ export class VideoWrapperComponent implements OnInit {
 	}
 
 	/**
-	 * Method that loads the video with HLS support
+	 * Load the video with HLS support.
+	 * @param currentVideo video URL
 	 */
 	private loadVideoWithHLS(currentVideo: string) {
 		this.hls.loadSource(currentVideo);
@@ -160,7 +151,8 @@ export class VideoWrapperComponent implements OnInit {
 	}
 
 	/**
-	 * Method that loads the video without HLS support
+	 * Load video without HLS support.
+	 * @param currentVideo video URL
 	 */
 	private loadVideo(currentVideo: string) {
 		this.video.nativeElement.src = currentVideo;
