@@ -8,12 +8,10 @@ describe('TimeComponent', () => {
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [ TimeComponent ]
+			imports: [TimeComponent]
 		})
-		.compileComponents();
-	});
+			.compileComponents();
 
-	beforeEach(() => {
 		fixture = TestBed.createComponent(TimeComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
