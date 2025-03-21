@@ -1,23 +1,28 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { MatLegacySliderChange as MatSliderChange } from '@angular/material/legacy-slider';
 
 @Component({
 	selector: 'app-progress-bar',
+	imports: [CommonModule],
 	templateUrl: './progress-bar.component.html',
-	styleUrls: ['./progress-bar.component.scss'],
 })
 export class ProgressBarComponent {
-	@Input() max = 0;
-	@Input() value = 0;
 	@Input() label = "";
-	@Output() input = new EventEmitter<MatSliderChange>();
-	@Output() change = new EventEmitter<MatSliderChange>();
+	@Input() max = 0;
+	@Input() smallSize = false;
+	@Input() value = 0;
+	@Output() input = new EventEmitter<Event>();
+	@Output() change = new EventEmitter<Event>();
 
-	inputHandler(event: MatSliderChange) {
+	get progress() {
+		return this.max > 0 ? (this.value * 100) / this.max : 0;
+	}
+
+	inputHandler(event: Event) {
 		this.input.emit(event);
 	}
 
-	changeHandler(event: MatSliderChange) {
+	changeHandler(event: Event) {
 		this.change.emit(event);
 	}
 }
