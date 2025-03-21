@@ -1,0 +1,27 @@
+<a
+  [class]="`group hover:cursor-pointer mt-4 w-full md:mt-2 flex md:h-30 flex-col items-center rounded-lg shadow-sm md:flex-row md:max-w-xl ${video.selected ? 'bg-gray-400 hover:bg-gray-400 dark:bg-gray-900 dark:hover:bg-gray-950' : 'bg-gray-300 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-900'}`"
+  (click)="emitVideoSelected()"
+>
+  <div class="relative">
+    <img
+      [class]="`sm:block group-hover:opacity-100 object-cover rounded-t-lg size-full md:h-30 md:w-50 md:rounded-none md:rounded-s-lg ${video.selected ? 'opacity-100' : 'opacity-85'}`"
+      [src]="video.thumbnail"
+      [alt]="video.title"
+    />
+    <app-control
+      class="hidden group-hover:block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+      icon="play_arrow"
+      [title]="`Play ${video.title}`"
+    ></app-control>
+  </div>
+  <div
+    [class]="`md:flex flex-col justify-between p-4 leading-normal hover:text-gray-900 hover:dark:text-white hidden ${video.selected ? 'text-gray-900 dark:text-gray-200' : 'text-gray-800 dark:text-gray-200'}`"
+  >
+    <h5 class="font-semibold mb-1">
+      {{ video.title }}
+    </h5>
+    <p class="max-w-48" [title]="video.description">
+      {{ shortVideoDescription }}
+    </p>
+  </div>
+</a>
