@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class VideoService {
-	private playingState = new Subject<boolean>();
 	private loading = new BehaviorSubject<boolean>(true);
+	private videoElement: HTMLVideoElement | undefined;
 	private videoEnded = new BehaviorSubject<boolean>(false);
 
 	get loading$(): Observable<boolean> {
@@ -17,16 +17,24 @@ export class VideoService {
 		this.loading.next(value);
 	}
 
+	setVideoElement(videoElement: HTMLVideoElement) {
+		this.videoElement = videoElement;
+	}
+
+	get playing() {
+		return !(this.videoElement?.paused ?? true)
+	}
+
 	play(): void {
-		this.playingState.next(true);
+		this.videoElement?.play()
 	}
 
 	pause(): void {
-		this.playingState.next(false);
+		this.videoElement?.pause()
 	}
 
-	get playingState$(): Observable<boolean> {
-		return this.playingState.asObservable();
+	get toggle() {
+		return this[this.playing ? "pause" : "play"];
 	}
 
 	get videoEnded$(): Observable<boolean> {
