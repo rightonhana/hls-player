@@ -8,12 +8,10 @@ describe('VolumeControlComponent', () => {
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [ VolumeControlComponent ]
+			imports: [VolumeControlComponent]
 		})
-		.compileComponents();
-	});
+			.compileComponents();
 
-	beforeEach(() => {
 		fixture = TestBed.createComponent(VolumeControlComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();

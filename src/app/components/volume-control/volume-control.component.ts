@@ -1,21 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { VolumeService } from 'src/app/services/volume/volume.service';
-import { MatLegacySliderChange as MatSliderChange } from '@angular/material/legacy-slider';
+import { Component } from '@angular/core';
+import { VolumeService } from '../../services/volume/volume.service';
+import { ControlComponent } from '../control/control.component';
+import { ProgressBarComponent } from '../progress-bar/progress-bar.component';
 
 @Component({
 	selector: 'app-volume-control',
-	templateUrl: './volume-control.component.html',
-	styleUrls: ['./volume-control.component.scss'],
+	imports: [ControlComponent, ProgressBarComponent],
+	templateUrl: './volume-control.component.html'
 })
-export class VolumeControlComponent implements OnInit {
-	iconVolumeMute = { name: 'Mute', value: 'volume_off' };
-	iconVolumeUp = { name: 'Unmute', value: 'volume_up' };
-	label = 'Video progress';
-	maxVolumeValue = 1;
-	volume = 1;
-	private savedVolume = 1;
+export class VolumeControlComponent {
+	iconVolumeMute = { name: 'Unmute', value: 'volume_off' };
+	iconVolumeUp = { name: 'Mute', value: 'volume_up' };
+	label = 'Volume level';
+	maxVolumeValue = 100;
+	volume = 100;
+	private savedVolume = 100;
 
-	constructor(private volumeService: VolumeService) {}
+	constructor(private volumeService: VolumeService) { }
 
 	ngOnInit() {
 		this.volumeService.volumeValue$.subscribe(
@@ -28,8 +29,8 @@ export class VolumeControlComponent implements OnInit {
 		this.volumeService.setVolumeValue(this.volume > 0 ? 0 : this.savedVolume);
 	}
 
-	onInput(event: MatSliderChange) {
-		this.volumeService.setVolumeValue(event?.value ?? 0);
+	onInput(event: Event) {
+		this.volumeService.setVolumeValue((event?.target as HTMLInputElement)?.valueAsNumber ?? 0);
 	}
 
 	get icon() {

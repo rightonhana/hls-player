@@ -1,16 +1,17 @@
-<div class="volume-control">
-	<app-control
-		class="icon"
-		[icon]="icon"
-		[title]="title"
-		(click)="onVolumeClick()"
-	></app-control>
-	<app-progress-bar
-		class="bar"
-		[max]="maxVolumeValue"
-		[value]="volume"
-		[label]="ariaLabel"
-		(input)="onInput($event)"
-		tabindex="0"
-	></app-progress-bar>
+<div class="group inline-flex items-center justify-start">
+  <app-control
+    class="icon"
+    [icon]="icon"
+    [title]="title"
+    (click)="onVolumeClick()"
+  ></app-control>
+  <app-progress-bar
+    class="group-hover:w-auto group-hover:pointer-events-auto w-0 overflow-hidden pointer-events-none mb-[3px] ml-[2px]"
+    [max]="maxVolumeValue"
+    [value]="volume"
+    [label]="ariaLabel"
+    [smallSize]="true"
+    (input)="onInput($event)"
+    tabindex="0"
+  ></app-progress-bar>
 </div>
