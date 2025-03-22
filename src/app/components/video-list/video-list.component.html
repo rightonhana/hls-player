@@ -1,25 +1,13 @@
-<div class="video-list">
-	<div class="header">
-		<h2 class="title">Next</h2>
-		<p class="play-next">
-			<span class="play-next-label"> Play next </span>
-			<mat-slide-toggle
-				(change)="onChange()"
-				[checked]="playNext"
-				aria-label="Enable autoplay"
-			></mat-slide-toggle>
-		</p>
-	</div>
-	<mat-nav-list class="list">
-		<a
-			mat-list-item
-			class="list-item"
-			*ngFor="let video of videoList; let i = index"
-			[ngClass]="{ active: video.selected }"
-			(click)="playIt(i)"
-		>
-			<i class="material-icons">play_arrow</i>
-			{{ video.name }}
-		</a>
-	</mat-nav-list>
+<div class="mt-8 md:mt-0 ml-4">
+  <div class="flex items-center justify-end h-fit">
+    <app-play-next-switch (toggle)="playNextHandler($event)"></app-play-next-switch>
+  </div>
+  <mat-nav-list class="w-full">
+    <ng-container *ngFor="let video of videoList; let index = index">
+      <app-video-list-item
+        [video]="video"
+        (videoSelected)="playItem(index)"
+      ></app-video-list-item>
+    </ng-container>
+  </mat-nav-list>
 </div>

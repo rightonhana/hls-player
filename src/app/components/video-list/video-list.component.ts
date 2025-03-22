@@ -1,34 +1,47 @@
-import { Component, OnInit } from '@angular/core';
-import { VideoPlaylistService } from 'src/app/services/video-playlist/video-playlist.service';
-import { VideoService } from 'src/app/services/video/video.service';
-import { PlaylistItem } from 'src/types/PlaylistItem';
+import { Component } from '@angular/core';
+import { VideoService } from '../../services/video/video.service';
+import { VideoPlaylistService } from '../../services/video-playlist/video-playlist.service';
+import { PlaylistItem } from '../../../types/PlaylistItem';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatListModule } from '@angular/material/list';
+import { CommonModule } from '@angular/common';
+import { VideoListItemComponent } from "../video-list-item/video-list-item.component";
+import { PlayNextSwitchComponent } from "../play-next-switch/play-next-switch.component";
 
 @Component({
 	selector: 'app-video-list',
+	imports: [
+		CommonModule,
+		MatListModule,
+		MatSlideToggleModule,
+		PlayNextSwitchComponent,
+		VideoListItemComponent,
+	],
 	templateUrl: './video-list.component.html',
-	styleUrls: ['./video-list.component.scss'],
 })
-export class VideoListComponent implements OnInit {
-	playNext = true;
+export class VideoListComponent {
+	activeVideo = 0;
 	videoEnded = false;
-	videoList: { name: string; selected: boolean }[] = [];
-	private list: PlaylistItem[] = [];
-	private activeVideo = 0;
+	videoList: { title: string; description: string; thumbnail: string; selected: boolean }[] = [];
+	private _playNext = false;
+	private list: ReadonlyArray<PlaylistItem> = [];
 
 	constructor(
 		private videoService: VideoService,
 		private videoPlaylistService: VideoPlaylistService
-	) {}
+	) { }
 
 	ngOnInit() {
 		this.videoPlaylistService.list$.subscribe((list) => (this.list = list));
-		this.videoPlaylistService.currentVideo$.subscribe((currentVideo) => {
-			this.videoList = this.list.map((item) => ({
-				name: item.title,
-				selected: item.url === currentVideo,
+		this.videoPlaylistService.currentVideoURL$.subscribe((currentVideo) => {
+			this.videoList = this.list.map(({ title, description, thumbnail, url }) => ({
+				title,
+				description,
+				thumbnail,
+				selected: url === currentVideo,
 			}));
 		});
-		this.videoPlaylistService.fetchList('./assets/playlist.json');
+		this.videoPlaylistService.fetchList('/playlist.json');
 		this.videoPlaylistService.shouldPlayNext$.subscribe(
 			(playNext) => (this.playNext = playNext)
 		);
@@ -40,14 +53,22 @@ export class VideoListComponent implements OnInit {
 		});
 	}
 
-	playIt(index: number): void {
+	playItem(index: number): void {
 		this.videoPlaylistService.setCurrentVideoByIndex(index);
 		this.videoService.play();
 		this.activeVideo = index;
 	}
 
-	onChange(): void {
-		this.playNext = !this.playNext;
-		this.videoPlaylistService.setShouldPlayNext(this.playNext);
+	playNextHandler(event: Event) {
+		this.playNext = (event?.target as HTMLInputElement)?.checked
+		this.videoPlaylistService.setShouldPlayNext((event?.target as HTMLInputElement)?.checked);
+	}
+
+	get playNext() {
+		return this._playNext;
+	}
+
+	set playNext(value: boolean) {
+		this._playNext = value;
 	}
 }
