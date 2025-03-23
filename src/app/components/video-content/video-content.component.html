@@ -1,0 +1,22 @@
+<div>
+  <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">{{ currentVideoData.title }}</h1>
+  <div
+    class="flex flex-col items-center bg-gray-300 rounded-lg overflow-hidden shadow-sm md:max-w-xl dark:bg-gray-700"
+  >
+    <div
+      class="object-cover w-full h-full w-full md:h-auto"
+    >
+      <div
+        class="video w-full h-full max-w-full"
+      >
+        <app-video-wrapper></app-video-wrapper>
+        <app-controls></app-controls>
+      </div>
+    </div>
+    <div class="flex flex-col justify-between p-4 leading-normal">
+      <p class="mb-3 font-normal text-gray-800 dark:text-gray-300">
+        {{ currentVideoData.description }}
+      </p>
+    </div>
+  </div>
+</div>
