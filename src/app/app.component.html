@@ -1,10 +1,10 @@
-<div class="container">
-	<h1>{{ title }}</h1>
-	<div class="video-app">
-		<div class="video-player">
-			<app-video-wrapper></app-video-wrapper>
-			<app-controls></app-controls>
-		</div>
-		<app-video-list class="list"></app-video-list>
-	</div>
+<div class="flex min-h-screen flex-col">
+  <app-navigation></app-navigation>
+  <main
+    class="mx-auto max-w-7xl flex-grow flex p-8 md:flex-row flex-col items-center justify-center md:items-start md:justify-center"
+  >
+    <app-video-content></app-video-content>
+    <app-video-list></app-video-list>
+  </main>
+  <app-footer></app-footer>
 </div>
