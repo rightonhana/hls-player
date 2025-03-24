@@ -1,0 +1,11 @@
+{
+	"$schema": "https://raw.githubusercontent.com/denoland/deno/refs/heads/main/cli/schemas/config-file.v1.json",
+	"imports": {
+		"fs": "node:fs",
+		"fs/promises": "node:fs/promises",
+		"path": "node:path",
+		"process": "node:process",
+		"url": "node:url"
+	},
+	"nodeModulesDir": "manual"
+}

@@ -1,44 +1,41 @@
 name: Deploy
 on:
-  push:
-    branches: main
-  pull_request:
-    branches: main
+    push:
+        branches: main
+    pull_request:
+        branches: main
 
 jobs:
-  deploy:
-    name: Deploy
-    runs-on: ubuntu-latest
+    deploy:
+        name: Deploy
+        runs-on: ubuntu-latest
 
-    permissions:
-      id-token: write # Needed for auth with Deno Deploy
-      contents: read # Needed to clone the repository
+        permissions:
+            id-token: write # Needed for auth with Deno Deploy
+            contents: read # Needed to clone the repository
 
-    steps:
-      - name: Clone repository
-        uses: actions/checkout@v4
+        steps:
+            - name: Clone repository
+              uses: actions/checkout@v4
 
-      - name: Install Deno
-        uses: denoland/setup-deno@v2
-        with:
-          deno-version: v2.x
+            - name: Install Deno
+              uses: denoland/setup-deno@v2
+              with:
+                  deno-version: v2.x
 
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
+            - name: Install Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: lts/*
 
-      - name: Install step
-        run: "npm install"
+            - name: Install step
+              run: "npm install"
 
-      - name: Build step
-        run: "npm run build --configuration=production"
+            - name: Build step
+              run: "npm run build --configuration=production"
 
-      - name: Upload to Deno Deploy
-        uses: denoland/deployctl@v1
-        with:
-          project: "hls-player"
-          entrypoint: "hls-player/browser/index.html"
-          root: "dist"
-          
-          
+            - name: Upload to Deno Deploy
+              uses: denoland/deployctl@v1
+              with:
+                  project: hls-player
+                  entrypoint: main.ts
