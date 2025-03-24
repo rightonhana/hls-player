@@ -32,13 +32,13 @@ jobs:
         run: "npm install"
 
       - name: Build step
-        run: "npm run build"
+        run: "npm run build --configuration=production"
 
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
           project: "hls-player"
-          entrypoint: "hls-player/browser/main-*.js"
+          entrypoint: "hls-player/browser/main*.js"
           root: "dist"
           
           
