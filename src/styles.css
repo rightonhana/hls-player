@@ -1,3 +1,9 @@
 @import "tailwindcss";
 
 @variant dark (&:where(.dark, .dark *));
+
+@custom-variant fullscreen {
+  &:fullscreen {
+    @slot;
+  }
+}
