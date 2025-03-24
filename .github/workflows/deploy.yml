@@ -38,7 +38,7 @@ jobs:
         uses: denoland/deployctl@v1
         with:
           project: "hls-player"
-          entrypoint: "hls-player/browser/main-JWF5AOF2.js"
+          entrypoint: "hls-player/browser/main-*.js"
           root: "dist"
-          include: dist
+          
           
