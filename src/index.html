@@ -1,19 +1,60 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Hls Player</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-</head>
-<body class="mat-typography">
-  <app-root></app-root>
-  <noscript>
-    <p>You need to enable JavaScript to run this app...<br/><br/>ʕノ•ᴥ•ʔノ ︵ ┻━┻</p>
-  </noscript>
-</body>
+<!DOCTYPE html>
+<html lang="en" class="min-h-dvh bg-gray-100 dark:bg-gray-800">
+  <head>
+    <meta charset="utf-8" />
+    <title>HLS Player</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.svg" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <script>
+      (() => {
+        const prefersColorSchemeLightQuery = globalThis.matchMedia(
+          "(prefers-color-scheme:light)"
+        );
+        const transitionNoneAll = "[&_*]:!transition-none";
+        const DARK = "dark";
+        const LIGHT = "light";
+        const LOCAL_STORAGE_THEME_KEY = "theme";
+
+        globalThis.addEventListener("storage", () => {
+          document.documentElement.classList.add(transitionNoneAll);
+          queueMicrotask(() =>
+            document.documentElement.classList.remove(transitionNoneAll)
+          );
+          const theme =
+            localStorage.getItem(LOCAL_STORAGE_THEME_KEY) ??
+            (prefersColorSchemeLightQuery.matches ? LIGHT : DARK);
+          document.documentElement.classList[theme === DARK ? "add" : "remove"](
+            DARK
+          );
+          localStorage.setItem(LOCAL_STORAGE_THEME_KEY, theme);
+        });
+        globalThis.dispatchEvent(new Event("storage"));
+        prefersColorSchemeLightQuery.addEventListener("change", () =>
+          globalThis.dispatchEvent(new Event("storage"))
+        );
+
+        console.log(
+          String.raw`%c
+This website was designed and built by %c@rightonhana ฅ^•ﻌ•^ฅ ✧
+
+%cIf you encounter any issues feel free to create a ticket in the github project https://github.com/rightonhana/hls-player/issues
+`,
+          "font-family: monospace",
+          "color: #51aebd;font-family: monospace",
+          "font-family: monospace"
+        );
+      })();
+    </script>
+  </head>
+  <body
+    style="overscroll-behavior-y: none"
+    class="mat-typography m-0 p-0 h-full flex flex-col items-between justify-center"
+  >
+    <app-root></app-root>
+  </body>
 </html>
