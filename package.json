@@ -3,6 +3,7 @@
 	"version": "1.0.0",
 	"scripts": {
 		"build": "ng build",
+		"build:prod": "ng build --configuration=production",
 		"ng": "ng",
 		"serve": "deno -A dist/hls-player/server/server.mjs",
 		"start": "ng serve",
