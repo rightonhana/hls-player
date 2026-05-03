@@ -5,13 +5,13 @@ import { VideoTimeService } from '../../services/video-time/video-time.service';
 import { VideoPlaylistService } from '../../services/video-playlist/video-playlist.service';
 import Hls from 'hls.js';
 import { ControlComponent } from '../control/control.component';
-import { CommonModule } from '@angular/common';
+
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { distinctUntilChanged } from 'rxjs';
 
 @Component({
 	selector: 'app-video-wrapper',
-	imports: [ControlComponent, SpinnerComponent, CommonModule],
+	imports: [ControlComponent, SpinnerComponent],
 	templateUrl: './video-wrapper.component.html',
 })
 export class VideoWrapperComponent {

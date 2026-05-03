@@ -1,9 +1,9 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, Input } from '@angular/core';
 
 @Component({
 	selector: 'app-spinner',
-	imports: [CommonModule],
+	imports: [],
 	templateUrl: './spinner.component.html',
 })
 export class SpinnerComponent {

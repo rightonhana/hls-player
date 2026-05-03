@@ -3,11 +3,11 @@
     <app-play-next-switch (toggle)="playNextHandler($event)"></app-play-next-switch>
   </div>
   <mat-nav-list class="w-full">
-    <ng-container *ngFor="let video of videoList; let index = index">
+    @for (video of videoList; track video; let index = $index) {
       <app-video-list-item
         [video]="video"
         (videoSelected)="playItem(index)"
       ></app-video-list-item>
-    </ng-container>
+    }
   </mat-nav-list>
 </div>

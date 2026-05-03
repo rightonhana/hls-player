@@ -6,12 +6,13 @@
     (dblclick)="onDoubleClick()"
     playsInline
   ></video>
-  <app-control
-    class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-    *ngIf="!playing && !loading"
-    [icon]="videoIconPlaying.value"
-    [title]="videoIconPlaying.name"
-    (click)="onVideoClick()"
-  ></app-control>
+  @if (!playing && !loading) {
+    <app-control
+      class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+      [icon]="videoIconPlaying.value"
+      [title]="videoIconPlaying.name"
+      (click)="onVideoClick()"
+    ></app-control>
+  }
   <app-spinner [loading]="loading"></app-spinner>
 </div>

@@ -1,10 +1,10 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ControlComponent } from '../control/control.component';
 
 @Component({
 	selector: 'app-video-list-item',
-	imports: [ControlComponent, CommonModule],
+	imports: [ControlComponent],
 	templateUrl: './video-list-item.component.html',
 })
 export class VideoListItemComponent {
