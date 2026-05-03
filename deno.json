@@ -7,5 +7,5 @@
 		"process": "node:process",
 		"url": "node:url"
 	},
-	"nodeModulesDir": "manual"
+	"nodeModulesDir": "auto"
 }
