@@ -1,11 +1,11 @@
 import { Component } from "@angular/core";
-import { VideoService } from "../../services/video/video.service";
-import { VideoPlaylistService } from "../../services/video-playlist/video-playlist.service";
-import { PlaylistItem } from "../../../types/PlaylistItem";
-import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatListModule } from "@angular/material/list";
-import { VideoListItemComponent } from "../video-list-item/video-list-item.component";
+import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { PlaylistItem } from "../../../types/PlaylistItem";
+import { VideoPlaylistService } from "../../services/video-playlist/video-playlist.service";
+import { VideoService } from "../../services/video/video.service";
 import { PlayNextSwitchComponent } from "../play-next-switch/play-next-switch.component";
+import { VideoListItemComponent } from "../video-list-item/video-list-item.component";
 
 @Component({
 	selector: "app-video-list",
@@ -35,7 +35,9 @@ export class VideoListComponent {
 	) {}
 
 	ngOnInit() {
-		this.videoPlaylistService.list$.subscribe(list => (this.list = list));
+		this.videoPlaylistService.list$.subscribe(
+			(list: readonly PlaylistItem[]) => (this.list = list),
+		);
 		this.videoPlaylistService.currentVideoURL$.subscribe(currentVideo => {
 			this.videoList = this.list.map(
 				({ title, description, thumbnail, url }) => ({
