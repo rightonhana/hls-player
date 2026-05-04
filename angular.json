@@ -24,6 +24,7 @@
 								"input": "public"
 							}
 						],
+						"verbose": true,
 						"styles": ["src/styles.css"],
 						"scripts": []
 					},
