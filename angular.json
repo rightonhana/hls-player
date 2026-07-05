@@ -87,6 +87,14 @@
 						"styles": ["src/styles.css"],
 						"scripts": []
 					}
+				},
+				"deploy": {
+					"builder": "angular-cli-ghpages:deploy",
+					"options": {
+						"name": "Florencia Gonzalez",
+						"email": "hello@rightonhana.dev",
+						"cname": "hls-player"
+					}
 				}
 			}
 		}
